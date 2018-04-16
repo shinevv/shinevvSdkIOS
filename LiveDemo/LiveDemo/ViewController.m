@@ -38,8 +38,8 @@
     
     liveArray = [NSMutableArray new];
     [[Shinevv shareManager] addShinevvDelegate:(id)self];
-    NSInteger Port = 3442;
-    [[Shinevv shareManager]joinRoom:@"tvvclass.shinevv.com" WithPort:Port WithToken:@"123123123" WithDisplayName:@"DemoName" WithRoomId:@"50048" WithRole:@"student"];
+    NSInteger Port = 3443;
+    [[Shinevv shareManager]joinRoom:@"192.168.1.226" WithPort:Port WithToken:@"06175684da8706a0da7e0a6fb2aa8d02" WithDisplayName:@"DemoName" WithRoomId:@"7" WithRole:@"student"];
 
     [self initView];
 }
