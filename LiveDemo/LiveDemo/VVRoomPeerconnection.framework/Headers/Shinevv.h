@@ -182,9 +182,10 @@ typedef struct NetworkInfoMes NetworkInfo;
  
  @param videoTrack 视频数据
  @param peerId 视频id
- @param sourceStr 媒体类型
+ @param sourceStr 媒体类型 默认摄像头@"webcam"or共享桌面@"screenshare"
  */
 - (void)onRemoveRemoteVideoTrack:(RTCVideoTrack *)videoTrack WithPeerId:(NSString *)peerId WithSource:(NSString *)sourceStr;
+
 /**
  切换用户视频信息
  
@@ -349,6 +350,14 @@ typedef struct NetworkInfoMes NetworkInfo;
  @param mediaType 媒体类型 摄像头视频 分享视频
  */
 - (void)setPeerVideoPause:(NSString *)peerId WithMediaType:(NSString *)mediaType Pause:(BOOL)pause;
+
+/**
+接收视频数据流
+
+@param peerId 视频id
+@param pause 接收、拒收
+*/
+- (void)setPeerVideoPause:(NSString *)peerId Pause:(BOOL)pause;
 
 /**
  发送IM消息

@@ -65,9 +65,7 @@
 
     
     NSDictionary * trackDict = @{@"peerId":peerId,
-                                 @"track":videoTrack,
-                                 @"displayName":displayName,
-                                 @"mediaShar":@"webcam"};
+                                 @"track":videoTrack};
     
     [liveArray addObject:trackDict];
     [_collectionView reloadData];
@@ -77,13 +75,10 @@
 }
 
 // 远端视频创建成功回调
-
 - (void)onAddRemoteVideoTrack:(RTCVideoTrack *)videoTrack WithPeerId:(NSString *)peerId WihtRole:(NSString *)role WithDisplayName:(NSString *)displayName WithMediaShar:(NSString *)mediaShar{
     
     NSDictionary * trackDict = @{@"peerId":peerId,
-                                 @"track":videoTrack,
-                                 @"displayName":displayName,
-                                 @"mediaShar":mediaShar};
+                                 @"track":videoTrack};
     
     [liveArray addObject:trackDict];
     [_collectionView reloadData];
@@ -115,8 +110,8 @@
         NSDictionary  * trackdict = [liveArray objectAtIndex:index];
         RTCVideoTrack * track = [trackdict objectForKey:@"track"];
         NSString * peerid = [trackdict objectForKey:@"peerId"];
-        NSString * mediaStr = [trackdict objectForKey:@"mediaShar"];
-        [[Shinevv shareManager]setPeerVideoPause:peerid WithMediaType:mediaStr Pause:false];
+       
+        [[Shinevv shareManager]setPeerVideoPause:peerid Pause:false];
         [cell connectWithVideoTarck:track];
         cell.VideoView.hidden = NO;
     }
@@ -133,25 +128,26 @@
 }
 
 // 远端视频删除
-- (void)onRemoveRemoteVideoTrack:(RTCVideoTrack *)videoTrack WithPeerId:(NSString *)peerId{
-
-        if (peerId.length != 0) {
-
-            if (videoTrack != nil) {
-              NSDictionary * videoDict = @{@"videoTrack":videoTrack,@"peerID":peerId};
-
-                NSMutableArray * tempArray = [NSMutableArray arrayWithArray:liveArray];
-
-                for (videoDict in tempArray) {
-                    NSString * peer =  [videoDict objectForKey:@"peerID"];
-                    if ([peer isEqualToString:peerId]) {
-                        [liveArray removeObject:videoDict];
-                    }
+- (void)onRemoveRemoteVideoTrack:(RTCVideoTrack *)videoTrack WithPeerId:(NSString *)peerId WithSource:(NSString *)sourceStr{
+    
+    if (peerId.length != 0) {
+        
+        if (videoTrack != nil) {
+            NSDictionary * videoDict = @{@"track":videoTrack,@"peerId":peerId};
+            
+            NSMutableArray * tempArray = [NSMutableArray arrayWithArray:liveArray];
+            
+            for (videoDict in tempArray) {
+                NSString * peer =  [videoDict objectForKey:@"peerId"];
+                if ([peer isEqualToString:peerId]) {
+                    [liveArray removeObject:videoDict];
                 }
-                [_collectionView reloadData];
             }
+            [_collectionView reloadData];
         }
+    }
 }
+
 #pragma VVMediaDelegate
 - (void)onReceiveTrackSilent:(NSString *)type WithStatus:(bool)status{
     
