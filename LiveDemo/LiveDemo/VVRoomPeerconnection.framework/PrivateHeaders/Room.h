@@ -108,7 +108,7 @@ public:
 
 	bool ConsumerClosed(int64_t id, std::string peerName);
 	
-	void SetPeerPause(std::string peerName, bool pause);
+	void SetPeerPause(std::string peerName, std::string source, bool pause);
 
 	void LeaveMe();
 private:

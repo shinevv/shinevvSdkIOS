@@ -142,14 +142,6 @@ typedef struct NetworkInfoMes NetworkInfo;
                     WihtRole:(NSString *)role
              WithDisplayName:(NSString*)displayName;
 
-
-/**
- 本地禁言禁视回调
- @param kind 禁止类型 音频、视频
- @param status 状态 打开、关闭
- */
-- (void)onReceiveTrackSilent:(NSString *)kind WithStatus:(bool)status;
-
 /**
  远端视频流数据回调
  
@@ -161,16 +153,44 @@ typedef struct NetworkInfoMes NetworkInfo;
 - (void)onAddRemoteVideoTrack:(RTCVideoTrack *)videoTrack
                    WithPeerId:(NSString *)peerId
                      WihtRole:(NSString *)role
-              WithDisplayName:(NSString*)displayName;
+              WithDisplayName:(NSString*)displayName
+                WithMediaShar:(NSString*)mediaShar;
 
+/**
+ 远端视频流数据回调
+ 
+ @param videoTrack 视频数据
+ @param peerId 视频id
+ @param role 户角色
+ @param displayName 显示名字
+ */
+- (void)onSharedDesktopVideoTrack:(RTCVideoTrack *)videoTrack
+                   WithPeerId:(NSString *)peerId
+                     WihtRole:(NSString *)role
+              WithDisplayName:(NSString*)displayName
+                WithMediaShar:(NSString*)mediaShar;
+
+/**
+ 本地禁言禁视回调
+ @param kind 禁止类型 音频、视频
+ @param status 状态 打开、关闭
+ */
+- (void)onReceiveTrackSilent:(NSString *)kind WithStatus:(bool)status;
 
 /**
  删除远端视频数据回调
  
  @param videoTrack 视频数据
  @param peerId 视频id
+ @param sourceStr 媒体类型
  */
-- (void)onRemoveRemoteVideoTrack:(RTCVideoTrack *)videoTrack WithPeerId:(NSString *)peerId;
+- (void)onRemoveRemoteVideoTrack:(RTCVideoTrack *)videoTrack WithPeerId:(NSString *)peerId WithSource:(NSString *)sourceStr;
+/**
+ 切换用户视频信息
+ 
+ @param userDictinfo 切换用户视频信息
+ */
+- (void)onTransformationUserDict:(NSDictionary *)userDictinfo;
 
 @end
 
@@ -197,6 +217,13 @@ typedef struct NetworkInfoMes NetworkInfo;
  @param peersDict 成员信息
  */
 - (void)onRemovePeer:(NSDictionary *)peersDict;
+
+/**
+ 管理员剔除人员
+ 
+ @param peersDict 成员信息
+ */
+- (void)onEliminatePeer:(NSDictionary *)peersDict;
 
 /**
  老师授权消息
@@ -297,12 +324,13 @@ typedef struct NetworkInfoMes NetworkInfo;
  @param roomId 房间号
  @param role 身份
  */
-- (void)joinRoom:(NSString*)domain
+- (void)joinRoom:(NSString *)domain
         WithPort:(NSInteger)port
        WithToken:(NSString *)token
  WithDisplayName:(NSString *)displayName
       WithRoomId:(NSString *)roomId
-        WithRole:(NSString*) role;
+        WithRole:(NSString *)role
+      WithPeerID:(NSString *)peerID;
 
 /**
  重新连接
@@ -318,8 +346,10 @@ typedef struct NetworkInfoMes NetworkInfo;
  
  @param peerId 视频id
  @param pause 接收、拒收
+ @param mediaType 媒体类型 摄像头视频 分享视频
  */
-- (void)setPeerVideoPause:(NSString *)peerId Pause:(BOOL)pause;
+- (void)setPeerVideoPause:(NSString *)peerId WithMediaType:(NSString *)mediaType Pause:(BOOL)pause;
+
 /**
  发送IM消息
  
@@ -398,6 +428,11 @@ typedef struct NetworkInfoMes NetworkInfo;
 - (bool)getUserAnth;
 
 /**
+ 获取画板数据
+ */
+-(NSMutableArray*)getDrawBoardHistory:(NSString*)drawBoardId;
+
+/**
  添加ShinevvDelegate
  */
 -(void)addShinevvDelegate:(id<ShinevvDelegate>)delegate;
@@ -406,11 +441,6 @@ typedef struct NetworkInfoMes NetworkInfo;
  删除ShinevvDelegate
  */
 -(void)removeShinevvDelegate:(id<ShinevvDelegate>)delegate;
-
-/**
- 获取画板数据
- */
--(NSMutableArray*)getDrawBoardHistory:(NSString*)drawBoardId;
 
 @end
 

@@ -14,6 +14,12 @@ public:
 		, _displayName(displayName)
 		, _role(role) {}
 
+	_PeerInfo(std::string peerName, std::string displayName, std::string role, std::string _source)
+		: _peerName(peerName)
+		, _displayName(displayName)
+		, _role(role) 
+		, _source(_source) {}
+
 	Json::Value ToJson() {
 		Json::Value data(Json::objectValue);
 		data["peerName"] = _peerName;
@@ -21,6 +27,7 @@ public:
 		data["displayName"] = _displayName;
 		data["nickName"] = _displayName; // duplicated, just adapter to app data struct
 		data["role"] = _role;
+		data["source"] = _source;
 
 		return data;
 	}
@@ -28,6 +35,7 @@ public:
 	std::string _peerName;
 	std::string _displayName;
 	std::string _role;
+	std::string _source;
 }PeerInfo;
 
 class TransportInfo {
@@ -134,7 +142,7 @@ public:
 	 * @param peerName
 	 * @param kind
 	 */
-    virtual void OnConsumerStreamClosed(std::string peerName, std::string kind) = 0;
+    virtual void OnConsumerStreamClosed(std::string peerName, std::string kind, std::string source) = 0;
 
     /**
 	 * ‘∂∂À“Ù∆µø™∆Ù
@@ -207,6 +215,18 @@ public:
 
 	void SendRequest(std::string data, ProcessCallBack successCallBack, ProcessCallBack failCallBack, void* userdata, bool notify = false);
 
+	void QueryRoomData(std::string data
+			, ProcessCallBack successCallBack, ProcessCallBack failCallBack, void* userdata);
+
+	void SendRouteRequest(std::string data
+			, ProcessCallBack successCallBack, ProcessCallBack failCallBack, void* userdata);
+
+	void SendPPTRequest(std::string data
+			, ProcessCallBack successCallBack, ProcessCallBack failCallBack, void* userdata);
+
+	void SendVideoRequest(std::string data
+			, ProcessCallBack successCallBack, ProcessCallBack failCallBack, void* userdata);
+
 	void SendChatRequest(std::string data
 			, ProcessCallBack successCallBack, ProcessCallBack failCallBack, void* userdata);
 
@@ -243,7 +263,7 @@ public:
 
 	void SlientTrack(std::string kind, std::string peerName, bool status);
 
-	void SetPeerPause(std::string peerName, bool pause);
+	void SetPeerPause(std::string peerName, std::string source, bool pause);
 
 	void AddRolesForAudioVideo(std::string role);
 

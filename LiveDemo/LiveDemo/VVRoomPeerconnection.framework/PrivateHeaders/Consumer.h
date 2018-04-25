@@ -68,6 +68,9 @@ public:
 
 	void SendPause(bool pause);
 
+	std::string  GetSource() {
+		return _source;
+	}
 private:
 	void DestorySelf();
 

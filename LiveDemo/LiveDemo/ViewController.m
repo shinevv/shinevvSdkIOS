@@ -39,8 +39,15 @@
     liveArray = [NSMutableArray new];
     [[Shinevv shareManager] addShinevvDelegate:(id)self];
     NSInteger Port = 3443;
-    [[Shinevv shareManager]joinRoom:@"192.168.1.226" WithPort:Port WithToken:@"06175684da8706a0da7e0a6fb2aa8d02" WithDisplayName:@"DemoName" WithRoomId:@"7" WithRole:@"student"];
 
+    [[Shinevv shareManager]joinRoom:@"192.168.1.226"
+                           WithPort:Port
+                          WithToken:@"06175684da8706a0da7e0a6fb2aa8d02"
+                    WithDisplayName:@"DemoName"
+                         WithRoomId:@"7"
+                           WithRole:@"student"
+                         WithPeerID:nil];
+    
     [self initView];
 }
 #pragma VVConnectionDelegate
@@ -56,21 +63,31 @@
 // 本地视频创建成功回调
 - (void)onAddLocalVideoTrack:(RTCVideoTrack *)videoTrack WithPeerId:(NSString *)peerId WihtRole:(NSString *)role WithDisplayName:(NSString*)displayName{
 
-    locavideoTrackDict = @{@"track":videoTrack,@"peerID":peerId};
-    [liveArray addObject:locavideoTrackDict];
+    
+    NSDictionary * trackDict = @{@"peerId":peerId,
+                                 @"track":videoTrack,
+                                 @"displayName":displayName,
+                                 @"mediaShar":@"webcam"};
+    
+    [liveArray addObject:trackDict];
     [_collectionView reloadData];
     locaStr = peerId;
+    
+    
 }
 
 // 远端视频创建成功回调
-- (void)onAddRemoteVideoTrack:(RTCVideoTrack *)videoTrack WithPeerId:(NSString *)peerId WihtRole:(NSString *)role WithDisplayName:(NSString*)displayName{
-    
 
-    NSDictionary * videoTrackDict = @{@"track":videoTrack,@"peerID":peerId};
-    [liveArray addObject:videoTrackDict];
+- (void)onAddRemoteVideoTrack:(RTCVideoTrack *)videoTrack WithPeerId:(NSString *)peerId WihtRole:(NSString *)role WithDisplayName:(NSString *)displayName WithMediaShar:(NSString *)mediaShar{
+    
+    NSDictionary * trackDict = @{@"peerId":peerId,
+                                 @"track":videoTrack,
+                                 @"displayName":displayName,
+                                 @"mediaShar":mediaShar};
+    
+    [liveArray addObject:trackDict];
     [_collectionView reloadData];
     remotStr = peerId;
-
 }
 
 - (void)initView{
@@ -97,8 +114,9 @@
     if (liveArray.count > index) {
         NSDictionary  * trackdict = [liveArray objectAtIndex:index];
         RTCVideoTrack * track = [trackdict objectForKey:@"track"];
-        NSString * peerid = [trackdict objectForKey:@"peerID"];
-        [[Shinevv shareManager]setPeerVideoPause:peerid Pause:false];
+        NSString * peerid = [trackdict objectForKey:@"peerId"];
+        NSString * mediaStr = [trackdict objectForKey:@"mediaShar"];
+        [[Shinevv shareManager]setPeerVideoPause:peerid WithMediaType:mediaStr Pause:false];
         [cell connectWithVideoTarck:track];
         cell.VideoView.hidden = NO;
     }
