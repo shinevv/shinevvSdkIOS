@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:LiveDemo.xcodeproj">
+      location = "group:../../../vvroom-ios/VVRoomPeerconnection.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "self:">
    </FileRef>
 </Workspace>

@@ -16,7 +16,13 @@
 #define HIGHT [UIScreen mainScreen].bounds.size.height
 #define WIDTH [UIScreen mainScreen].bounds.size.width
 
-@interface ViewController ()<VVConnectionDelegate,VVClassDelegate,VVMediaDelegate,VVPeerDelegate,VVClassDelegate>{
+@interface ViewController ()<
+VVConnectionDelegate,
+VVClassDelegate,
+VVMediaDelegate,
+VVPeerDelegate,
+VVClassDelegate>
+{
     NSMutableArray * liveArray;
     NSString * locaStr;
     NSString * remotStr;
@@ -39,14 +45,15 @@
     liveArray = [NSMutableArray new];
     [[Shinevv shareManager] addShinevvDelegate:(id)self];
     NSInteger Port = 3443;
-
-    [[Shinevv shareManager]joinRoom:@"192.168.1.226"
+    //连接服务器
+    [[Shinevv shareManager]joinRoom:@"rooms.shinevv.cn"
                            WithPort:Port
                           WithToken:@"06175684da8706a0da7e0a6fb2aa8d02"
                     WithDisplayName:@"DemoName"
-                         WithRoomId:@"7"
+                         WithRoomId:@"50349"
                            WithRole:@"student"
-                         WithPeerID:nil];
+                         WithPeerID:nil
+                      WithMediaType:nil];
     
     [self initView];
 }
@@ -61,7 +68,10 @@
 }
 #pragma VVRoomMediaDelegate
 // 本地视频创建成功回调
-- (void)onAddLocalVideoTrack:(RTCVideoTrack *)videoTrack WithPeerId:(NSString *)peerId WihtRole:(NSString *)role WithDisplayName:(NSString*)displayName{
+- (void)onAddLocalVideoTrack:(RTCVideoTrack *)videoTrack
+                  WithPeerId:(NSString *)peerId
+                    WihtRole:(NSString *)role
+             WithDisplayName:(NSString*)displayName{
 
     
     NSDictionary * trackDict = @{@"peerId":peerId,
@@ -75,7 +85,11 @@
 }
 
 // 远端视频创建成功回调
-- (void)onAddRemoteVideoTrack:(RTCVideoTrack *)videoTrack WithPeerId:(NSString *)peerId WihtRole:(NSString *)role WithDisplayName:(NSString *)displayName WithMediaShar:(NSString *)mediaShar{
+- (void)onAddRemoteVideoTrack:(RTCVideoTrack *)videoTrack
+                   WithPeerId:(NSString *)peerId
+                     WihtRole:(NSString *)role
+              WithDisplayName:(NSString *)displayName
+                WithMediaShar:(NSString *)mediaShar{
     
     NSDictionary * trackDict = @{@"peerId":peerId,
                                  @"track":videoTrack};
@@ -88,6 +102,7 @@
 - (void)initView{
     UICollectionViewFlowLayout *layout=[[UICollectionViewFlowLayout alloc]init];
     layout.minimumInteritemSpacing = 0;
+    
     layout.minimumLineSpacing = 1;
     
     _collectionView=[[UICollectionView alloc]initWithFrame:CGRectMake(0, 64, self.view.bounds.size.width, self.view.bounds.size.height-64) collectionViewLayout:layout];
@@ -98,10 +113,12 @@
     UINib *cellNib=[UINib nibWithNibName:@"CollectionViewCell" bundle:nil];
     [_collectionView registerNib:cellNib forCellWithReuseIdentifier:@"CollectionViewCell"];
 }
--(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
+-(NSInteger)collectionView:(UICollectionView *)collectionView
+    numberOfItemsInSection:(NSInteger)section{
     return 8;
 }
--(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
+-(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
+                 cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     CollectionViewCell *cell=[collectionView dequeueReusableCellWithReuseIdentifier:@"CollectionViewCell" forIndexPath:indexPath];
 
     [cell dispose];
@@ -118,19 +135,23 @@
    
     return cell;
 }
--(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
+-(UIEdgeInsets)collectionView:(UICollectionView *)collectionView
+                       layout:(UICollectionViewLayout *)collectionViewLayout 
+       insetForSectionAtIndex:(NSInteger)section
 {
     return UIEdgeInsetsMake(1, 1, 1, 0);
 }
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
-{
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout
+  sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
     return CGSizeMake(self.view.bounds.size.width/2-1, (self.view.bounds.size.height-64)/4-1.2);
 }
 
 // 远端视频删除
-- (void)onRemoveRemoteVideoTrack:(RTCVideoTrack *)videoTrack WithPeerId:(NSString *)peerId WithSource:(NSString *)sourceStr{
+- (void)onRemoveRemoteVideoTrack:(RTCVideoTrack *)videoTrack
+                      WithPeerId:(NSString *)peerId
+                      WithSource:(NSString *)sourceStr{
     
-    if (peerId.length != 0) {
+    if (peerId) {
         
         if (videoTrack != nil) {
             NSDictionary * videoDict = @{@"track":videoTrack,@"peerId":peerId};
@@ -183,10 +204,9 @@
 - (void)onRemovePeer:(NSDictionary *)peersDict{
     
 }
-
 /**
  离开房间调用
  - (void)leaveRoom
-*/
+ */
 
 @end

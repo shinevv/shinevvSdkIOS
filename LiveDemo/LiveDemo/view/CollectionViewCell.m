@@ -12,7 +12,6 @@
 @implementation CollectionViewCell{
     RTCVideoTrack* SvideoTrack;
     CGSize _remoteVideoSize;
-
 }
 
 - (void)awakeFromNib {

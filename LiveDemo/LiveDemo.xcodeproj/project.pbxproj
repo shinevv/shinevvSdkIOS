@@ -17,8 +17,8 @@
 		18BA39AB2023540C00985264 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BA39AA2023540C00985264 /* main.m */; };
 		18BA39B52023540D00985264 /* LiveDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BA39B42023540D00985264 /* LiveDemoTests.m */; };
 		18BA39C02023540D00985264 /* LiveDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BA39BF2023540D00985264 /* LiveDemoUITests.m */; };
-		18BA39CF2023553F00985264 /* VVRoomPeerconnection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18BA39CD202354A900985264 /* VVRoomPeerconnection.framework */; };
-		18BA39D02023553F00985264 /* VVRoomPeerconnection.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 18BA39CD202354A900985264 /* VVRoomPeerconnection.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		18E49F4820B7AE6F002BB6D0 /* VVRoomPeerconnection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18E49F4720B7AE6E002BB6D0 /* VVRoomPeerconnection.framework */; };
+		18E49F4920B7AE6F002BB6D0 /* VVRoomPeerconnection.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 18E49F4720B7AE6E002BB6D0 /* VVRoomPeerconnection.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,11 +41,11 @@
 /* Begin PBXCopyFilesBuildPhase section */
 		18BA39D12023554000985264 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				18BA39D02023553F00985264 /* VVRoomPeerconnection.framework in Embed Frameworks */,
+				18E49F4920B7AE6F002BB6D0 /* VVRoomPeerconnection.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -72,7 +72,7 @@
 		18BA39BB2023540D00985264 /* LiveDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LiveDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		18BA39BF2023540D00985264 /* LiveDemoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LiveDemoUITests.m; sourceTree = "<group>"; };
 		18BA39C12023540D00985264 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		18BA39CD202354A900985264 /* VVRoomPeerconnection.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = VVRoomPeerconnection.framework; sourceTree = "<group>"; };
+		18E49F4720B7AE6E002BB6D0 /* VVRoomPeerconnection.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VVRoomPeerconnection.framework; path = "Build/Products/Release-iphoneos/VVRoomPeerconnection.framework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,7 +80,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				18BA39CF2023553F00985264 /* VVRoomPeerconnection.framework in Frameworks */,
+				18E49F4820B7AE6F002BB6D0 /* VVRoomPeerconnection.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -114,6 +114,7 @@
 		18BA398F2023540C00985264 = {
 			isa = PBXGroup;
 			children = (
+				18E49F4720B7AE6E002BB6D0 /* VVRoomPeerconnection.framework */,
 				18BA399A2023540C00985264 /* LiveDemo */,
 				18BA39B32023540C00985264 /* LiveDemoTests */,
 				18BA39BE2023540D00985264 /* LiveDemoUITests */,
@@ -134,7 +135,6 @@
 		18BA399A2023540C00985264 /* LiveDemo */ = {
 			isa = PBXGroup;
 			children = (
-				18BA39CD202354A900985264 /* VVRoomPeerconnection.framework */,
 				18BA399B2023540C00985264 /* AppDelegate.h */,
 				18BA399C2023540C00985264 /* AppDelegate.m */,
 				18BA399E2023540C00985264 /* ViewController.h */,
@@ -474,6 +474,8 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/LiveDemo",
+					"$(PROJECT_DIR)/Build/Products/Release-iphoneos",
+					"$(PROJECT_DIR)/Build/Products/Debug-iphoneos",
 				);
 				INFOPLIST_FILE = LiveDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
@@ -499,6 +501,8 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/LiveDemo",
+					"$(PROJECT_DIR)/Build/Products/Release-iphoneos",
+					"$(PROJECT_DIR)/Build/Products/Debug-iphoneos",
 				);
 				INFOPLIST_FILE = LiveDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
