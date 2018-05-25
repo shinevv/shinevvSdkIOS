@@ -46,11 +46,11 @@ VVClassDelegate>
     [[Shinevv shareManager] addShinevvDelegate:(id)self];
     NSInteger Port = 3443;
     //连接服务器
-    [[Shinevv shareManager]joinRoom:@"rooms.shinevv.cn"
+    [[Shinevv shareManager]joinRoom:@"192.168.1.226"
                            WithPort:Port
                           WithToken:@"06175684da8706a0da7e0a6fb2aa8d02"
                     WithDisplayName:@"DemoName"
-                         WithRoomId:@"50349"
+                         WithRoomId:@"7"
                            WithRole:@"student"
                          WithPeerID:nil
                       WithMediaType:nil];
