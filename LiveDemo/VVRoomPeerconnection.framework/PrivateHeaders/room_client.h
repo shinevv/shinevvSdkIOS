@@ -254,6 +254,17 @@ public:
 	 */
 	void SendContentControlAuthRequest(std::string data
 			, ProcessCallBack successCallBack, ProcessCallBack failCallBack, void* userdata);
+	/**
+	* 发送用户自定义消息
+	* @param data 消息内容
+	* @param toSelf 消息是否发送给自己
+	*/
+	void SendUserData(std::string data, bool toSelf, ProcessCallBack successCallBack, ProcessCallBack failCallBack, void* userdata);
+
+	/**
+	* 获取用户自定义消息历史
+	*/
+	void GetUserDataHistory(ProcessCallBack successCallBack, ProcessCallBack failCallBack, void* userdata);
 
 	void DisableCamera();
 
@@ -305,6 +316,10 @@ private:
 	bool SetMicProducer();
 
 	bool EnableWebcam();
+
+	void closeMicProducer();
+
+	void closeWebcamProducer();
 
 	void ActiveSpeakerCallBack(Json::Value value);
 

@@ -187,6 +187,13 @@ typedef struct NetworkInfoMes NetworkInfo;
 - (void)onRemoveRemoteVideoTrack:(RTCVideoTrack *)videoTrack WithPeerId:(NSString *)peerId WithSource:(NSString *)sourceStr;
 
 /**
+ 角色切换后本地媒体状态回调
+ @param kind 禁止类型 音频、视频
+ @param status 状态 打开、关闭
+ */
+- (void)onChangeTrackStatus:(NSDictionary *)peersDict;
+
+/**
  切换用户视频信息
  
  @param userDictinfo 切换用户视频信息
@@ -211,6 +218,20 @@ typedef struct NetworkInfoMes NetworkInfo;
  @param peersDict 成员信息
  */
 - (void)onJoinPeer:(NSDictionary *)peersDict;
+
+/**
+ 成员角色列表回调
+ 
+ @param peersDict 成员信息
+ */
+- (void)onChangePeerList:(NSDictionary *)peersDict;
+
+/**
+ 成员角色音视频回调
+ 
+ @param peersDict 成员信息
+*/
+- (void)onChangePeerRole:(NSDictionary *)peersDict;
 
 /**
  成员离开回调
@@ -435,6 +456,12 @@ typedef struct NetworkInfoMes NetworkInfo;
 - (void)closeRolesForAudioVideo:(NSString *)role;
 
 /**
+ 打开用户角色音视频
+ @param role 用户角色
+ */
+- (void)openRolesForAudioVideo:(NSString *)role;
+
+/**
  获取用户信息
  peerid 用户id
  displayName 用户名字
@@ -479,6 +506,11 @@ typedef struct NetworkInfoMes NetworkInfo;
  删除ShinevvDelegate
  */
 -(void)removeShinevvDelegate:(id<ShinevvDelegate>)delegate;
+
+/**
+ 获取当前peerId
+ */
+- (NSString*) getPeerId;
 
 @end
 
