@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+    <device id="retina4_0" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="VVLogInControlle">
+            <connections>
+                <outlet property="loginBtn" destination="L6x-7I-R0B" id="lcr-3g-rpm"/>
+                <outlet property="nikeNameLab" destination="bkb-L6-ay4" id="MYJ-ai-FHA"/>
+                <outlet property="nikeTestFiled" destination="Tra-Xr-ng4" id="cIu-IU-TNB"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="back" translatesAutoresizingMaskIntoConstraints="NO" id="AGT-Xs-Hmb">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <color key="backgroundColor" red="0.064841791987419128" green="0.0783696249127388" blue="0.089415110647678375" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bkb-L6-ay4">
+                    <rect key="frame" x="76" y="149" width="169" height="43"/>
+                    <color key="backgroundColor" red="0.064841791989999994" green="0.078369624910000005" blue="0.089415110650000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="43" id="pPg-4e-cWk"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="昵称" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Tra-Xr-ng4">
+                    <rect key="frame" x="89" y="162" width="142" height="18"/>
+                    <nil key="textColor"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <textInputTraits key="textInputTraits"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="color" keyPath="placeholderLabel.textColor">
+                            <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </textField>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L6x-7I-R0B">
+                    <rect key="frame" x="0.0" y="269" width="320" height="30"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                    <state key="normal" title="登录">
+                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="loginClick:" destination="-1" eventType="touchUpInside" id="71v-Zr-kVm"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="L6x-7I-R0B" firstAttribute="leading" secondItem="AGT-Xs-Hmb" secondAttribute="leading" id="3ua-MC-Fme"/>
+                <constraint firstItem="AGT-Xs-Hmb" firstAttribute="centerX" secondItem="bkb-L6-ay4" secondAttribute="centerX" id="5xN-u2-1zl"/>
+                <constraint firstAttribute="trailing" secondItem="AGT-Xs-Hmb" secondAttribute="trailing" id="83C-eg-ax1"/>
+                <constraint firstItem="bkb-L6-ay4" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="76" id="847-2L-QCl"/>
+                <constraint firstItem="Tra-Xr-ng4" firstAttribute="centerY" secondItem="bkb-L6-ay4" secondAttribute="centerY" id="8k5-Du-A7V"/>
+                <constraint firstItem="bkb-L6-ay4" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="149" id="BkP-Ze-sbg"/>
+                <constraint firstItem="L6x-7I-R0B" firstAttribute="top" secondItem="bkb-L6-ay4" secondAttribute="bottom" constant="77" id="Eh5-jI-zEi"/>
+                <constraint firstItem="L6x-7I-R0B" firstAttribute="centerY" secondItem="AGT-Xs-Hmb" secondAttribute="centerY" id="Kct-6r-OqW"/>
+                <constraint firstItem="Tra-Xr-ng4" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="89" id="PV0-Rs-F3c"/>
+                <constraint firstItem="Tra-Xr-ng4" firstAttribute="centerX" secondItem="bkb-L6-ay4" secondAttribute="centerX" id="SmJ-Dh-dzy"/>
+                <constraint firstItem="AGT-Xs-Hmb" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Xmv-H4-ncJ"/>
+                <constraint firstAttribute="bottom" secondItem="AGT-Xs-Hmb" secondAttribute="bottom" id="dXh-0j-chV"/>
+                <constraint firstItem="AGT-Xs-Hmb" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="eRC-uO-Ilf"/>
+                <constraint firstItem="L6x-7I-R0B" firstAttribute="trailing" secondItem="AGT-Xs-Hmb" secondAttribute="trailing" id="efF-eA-CzX"/>
+            </constraints>
+            <point key="canvasLocation" x="-336" y="87"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="back" width="375" height="667"/>
+    </resources>
+</document>
