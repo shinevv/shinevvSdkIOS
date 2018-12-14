@@ -16,6 +16,7 @@
 - (void)onCalling:(NSArray*)data;
 - (void)onCallAgree:(NSArray*)data;
 - (void)onCallEnd:(NSArray*)data;
+- (void)onRoom:(NSDictionary*)data;
 @end
 
 @interface SocketClient : NSObject
@@ -24,7 +25,8 @@
 + (SocketClient*)client;
 + (void)openSocket;
 - (void)loginWithName:(NSString*)name;
-- (void)callFormName:(NSString*)nama toName:(NSString*)toName type:(int)type room:(long)roomid;
+- (void)callFormName:(NSString*)nama toName:(NSString*)toName type:(int)type room:(long)roomid token:(NSString*)token;
 - (void)callAgreeWithRoom:(long)roomId;
 - (void)callEndWithRoom:(long)roomId;
+- (void)getRoom;
 @end

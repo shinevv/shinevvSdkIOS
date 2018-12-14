@@ -10,6 +10,6 @@
 
 @interface ViewController : UIViewController<UICollectionViewDelegate,UICollectionViewDataSource>
 @property(nonatomic,strong)UICollectionView *collectionView;
-
+@property(nonatomic,strong)NSDictionary* roomInfo;
 @end
 

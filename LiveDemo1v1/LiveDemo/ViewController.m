@@ -37,6 +37,7 @@ SocketClientDelegate>
     NSString* strType;//保存通话类型
     NSString* toName;  //通话目标对象
     long connectRoomId;  //通话房间id
+    NSString* token;
     BOOL bAutoConnect;    //是否自动接受通话请求
     
     
@@ -44,6 +45,7 @@ SocketClientDelegate>
 
 @property (nonatomic, strong) VideoView* vView;
 @property (nonatomic, copy) NSArray* users;
+@property (nonatomic, copy) NSDictionary* roomInfo;
 @end
 
 @implementation ViewController
@@ -70,6 +72,7 @@ SocketClientDelegate>
     //[self joinroom];
     
     [SocketClient client].dataDelegate = self;
+    [[SocketClient client] getRoom];
 }
 
 - (void)setDatas:(NSArray *)data
@@ -86,9 +89,9 @@ SocketClientDelegate>
 - (void)joinroom
 {
     //连接服务器
-    [[Shinevv shareManager]joinRoom:@"vvroom.shinevv.cn"
+    [[Shinevv shareManager]joinRoom:@"sdk.sl.shinevv.com"
                            WithPort:3443
-                          WithToken:@"06175684da8706a0da7e0a6fb2aa8d02"
+                          WithToken:token
                     WithDisplayName:_nickName
                          WithRoomId:[NSString stringWithFormat:@"%ld", connectRoomId]
                            WithRole:@"student"
@@ -206,10 +209,12 @@ SocketClientDelegate>
     //1v1通话目标对象
     toName = [_users objectAtIndex:peerIndex];
     //1v1通话房间id
-    connectRoomId = 1000000 + arc4random()%8000000;
+    connectRoomId = [_roomInfo[@"roomid"] longValue];
+    
+    token = _roomInfo[@"token"];
     
     //发送请求
-    [[SocketClient client] callFormName:_nickName toName:toName type:type room:connectRoomId];
+    [[SocketClient client] callFormName:_nickName toName:toName type:type room:connectRoomId token:token];
     //显示等待界面
     [self showWaitView:YES];
     
@@ -253,6 +258,7 @@ SocketClientDelegate>
     [self.vView removeFromSuperview];
     self.vView = nil;
     connectRoomId = 0;
+    token = nil;
     toName = nil;
     strType = nil;
 }
@@ -294,7 +300,8 @@ SocketClientDelegate>
         return;
     }
     toName = infoDic[@"calling"];
-    connectRoomId = [infoDic[@"room"] longValue];
+    connectRoomId = [infoDic[@"roomid"] longValue];
+    token = infoDic[@"token"];
     strType = [infoDic[@"method"]intValue] ?@"audio":@"video";
     [self showWaitView:NO];
 }
@@ -302,7 +309,7 @@ SocketClientDelegate>
 - (void)onCallAgree:(NSArray*)data
 {
     NSDictionary* infodic = data[0];
-    long roomid =[infodic[@"room"] longValue];
+    long roomid =[infodic[@"roomid"] longValue];
     if (roomid == connectRoomId) {
         [self joinroom];
     }
@@ -314,7 +321,7 @@ SocketClientDelegate>
     
     NSDictionary* infodic = data[0];
             
-    long roomid =[infodic[@"room"] longLongValue];
+    long roomid =[infodic[@"roomid"] longLongValue];
     if (roomid ==connectRoomId) {
         [self leaveRoom];
         [self hideWaitView];
@@ -322,7 +329,11 @@ SocketClientDelegate>
     
 }
 
-
+- (void)onRoom:(NSDictionary *)data{
+    self.roomInfo  = data;
+//    connectRoomId = [data[@"roomid"] longLongValue];
+//    token = data[@"token"];
+}
 
 
 

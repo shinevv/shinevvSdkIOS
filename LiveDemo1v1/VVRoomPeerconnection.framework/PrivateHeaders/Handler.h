@@ -84,9 +84,9 @@ public:
 
 	virtual ~Handler();
 
-	virtual webrtc::AudioTrackInterface* GetAudioTrack() = 0;
+	virtual webrtc::AudioTrackInterface* GetAudioTrack(std::string label) = 0;
 
-	virtual rtc::scoped_refptr<webrtc::VideoTrackInterface> GetVideoTrack() = 0;
+	virtual rtc::scoped_refptr<webrtc::VideoTrackInterface> GetVideoTrack(std::string label) = 0;
 
 	virtual bool AddProducer(Producer* producer, Json::Value& rtpParameters) = 0;
 
@@ -97,6 +97,8 @@ public:
 	virtual void RemoveProducer(Producer* producer) = 0;
 
 	virtual void RemoveConsumer(Consumer* consumer) = 0;
+
+	virtual void TransportClosed() = 0;
 
 	RemoteSdp* GetRemoteSdp() {
 		return _remoteSdp;
@@ -177,9 +179,9 @@ public:
     // PeerConnectionObserver implementation.
     void OnAddStream(rtc::scoped_refptr<webrtc::MediaStreamInterface> stream) override{}
                         
-	virtual webrtc::AudioTrackInterface* GetAudioTrack() override;
+	virtual webrtc::AudioTrackInterface* GetAudioTrack(std::string label) override;
 
-	virtual rtc::scoped_refptr<webrtc::VideoTrackInterface> GetVideoTrack() override;
+	virtual rtc::scoped_refptr<webrtc::VideoTrackInterface> GetVideoTrack(std::string label) override;
 
 	virtual bool AddProducer(Producer* producer, Json::Value& rtpParameters) override;
 
@@ -190,6 +192,8 @@ public:
 	virtual void RemoveProducer(Producer* producer) override;
 
 	virtual void RemoveConsumer(Consumer* consumer) override {}
+
+	virtual void TransportClosed() override {}
 
 	bool SetRemoteSdp(resip::SdpContents offerSdp);
 
@@ -238,9 +242,9 @@ public:
     // PeerConnectionObserver implementation.
     void OnAddStream(rtc::scoped_refptr<webrtc::MediaStreamInterface> stream) override;
 
-	virtual webrtc::AudioTrackInterface* GetAudioTrack() override;
+	virtual webrtc::AudioTrackInterface* GetAudioTrack(std::string label) override;
 
-	virtual rtc::scoped_refptr<webrtc::VideoTrackInterface> GetVideoTrack() override;
+	virtual rtc::scoped_refptr<webrtc::VideoTrackInterface> GetVideoTrack(std::string label) override;
 
 	virtual bool AddProducer(Producer* producer, Json::Value& rtpParameters) override {return true;}
 
@@ -249,6 +253,8 @@ public:
 	virtual void RemoveProducer(Producer* producer) override {}
 
 	virtual void RemoveConsumer(Consumer* consumer) override;
+
+	virtual void TransportClosed() override;
 
 	virtual std::vector<TransportInfo*> GetTransportInfos() override;
 
@@ -276,13 +282,6 @@ private:
 	std::map<int, ConsumerInfos*> _consumer_infos_map;
 
 	std::vector<std::string> _kinds_vector;
-
-	webrtc::AudioTrackVector _audio_tracks;
-
-	webrtc::VideoTrackVector _video_tracks;
-
-	std::unique_ptr<webrtc::CriticalSectionWrapper> _audio_tracks_lock_;
-	std::unique_ptr<webrtc::CriticalSectionWrapper> _video_tracks_lock_;
 
     rtc::scoped_refptr<webrtc::MediaStreamInterface> _rec_stream;
 

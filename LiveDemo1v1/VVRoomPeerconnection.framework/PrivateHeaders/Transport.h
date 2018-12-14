@@ -65,7 +65,10 @@ public:
 
 	void SendPause(Consumer* consumer, bool pause);
 
+    void TransportClosed();
+
 private:
+
 	bool ExecAddProducer(Producer* producer);
 
 	bool ExecAddConsumer(Consumer* consumer);

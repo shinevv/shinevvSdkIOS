@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate.h"
+#import "VVLogInControlle.h"
+#import "IQKeyboardManager.h"
 
 @interface AppDelegate ()
 
@@ -17,7 +19,25 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    [self registerCustomKeyboard];
+    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+//    [self setRootVClogin];
+    VVLogInControlle* logVC = [[VVLogInControlle alloc] init];
+    logVC.title = @"SDK-Demo";
+    UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:logVC];
+    self.window.rootViewController = nav;
+    [self.window makeKeyAndVisible];
     return YES;
+}
+
+//注册第三方的键盘，用于控制文本编辑和键盘的高度
+- (void)registerCustomKeyboard
+{
+    IQKeyboardManager *kbManager =  [IQKeyboardManager sharedManager];
+    kbManager.enableAutoToolbar = NO;
+    kbManager.shouldResignOnTouchOutside = YES;
+    kbManager.enable = YES;
 }
 
 

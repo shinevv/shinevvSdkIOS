@@ -56,6 +56,16 @@ public:
 	Json::Value& GetRtpParameters() {
 		return _rtpParameters;
 	}
+
+	void SetLabel(std::string label) {
+		_label = label;
+	}
+
+	std::string GetLabel() {
+		return _label;
+	}
+
+
 private:
 	webrtc::MediaStreamTrackInterface* _originalTrack = NULL;
 
@@ -81,6 +91,8 @@ private:
 	int _statsInterval = 1;
 
 	Json::Value _rtpParameters;
+
+	std::string _label;
 };
 
 

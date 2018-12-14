@@ -127,7 +127,7 @@ typedef struct NetworkInfoMes NetworkInfo;
  @param bSuccess true, 成功; false, 失败
  */
 @optional
-- (void)OnCreateLocalVideo:(bool) status;
+- (void)OnCreateLocalVideo:(bool)status WithReject:(bool)fromSever;
 
 /**
  本地视频流数据回调
@@ -187,13 +187,6 @@ typedef struct NetworkInfoMes NetworkInfo;
 - (void)onRemoveRemoteVideoTrack:(RTCVideoTrack *)videoTrack WithPeerId:(NSString *)peerId WithSource:(NSString *)sourceStr;
 
 /**
- 角色切换后本地媒体状态回调
- @param kind 禁止类型 音频、视频
- @param status 状态 打开、关闭
- */
-- (void)onChangeTrackStatus:(NSDictionary *)peersDict;
-
-/**
  切换用户视频信息
  
  @param userDictinfo 切换用户视频信息
@@ -220,25 +213,19 @@ typedef struct NetworkInfoMes NetworkInfo;
 - (void)onJoinPeer:(NSDictionary *)peersDict;
 
 /**
- 成员角色列表回调
- 
- @param peersDict 成员信息
- */
-- (void)onChangePeerList:(NSDictionary *)peersDict;
-
-/**
- 成员角色音视频回调
- 
- @param peersDict 成员信息
-*/
-- (void)onChangePeerRole:(NSDictionary *)peersDict;
-
-/**
  成员离开回调
  
  @param peersDict 成员信息
  */
 - (void)onRemovePeer:(NSDictionary *)peersDict;
+
+/**
+ 会议成员离开回调
+ 
+ @param membersArray 成员信息
+ */
+- (void)onRemoveMembers:(NSArray *)membersArray;
+
 
 /**
  管理员剔除人员
@@ -269,6 +256,12 @@ typedef struct NetworkInfoMes NetworkInfo;
  @param fileId 文件ID
  */
 - (void)onDeletFile:(NSString *)fileId;
+
+/**
+ 刷新课件消息回调
+ */
+- (void)onRefreshFile;
+
 @end
 
 @protocol VVChatDelegate<ShinevvDelegate>
@@ -325,6 +318,16 @@ typedef struct NetworkInfoMes NetworkInfo;
  @param netWorkState 网络信息
  */
 - (void)onRecTransportStats:(NetworkInfo)netWorkState;
+
+/**
+ 音视频状态回调
+ 
+ @param peers 人员id
+ @param stats 开启、关闭
+ */
+- (void)onAudioAndVideoPeers:(NSArray *)peers
+               WithMediaType:(NSString *)mediaType
+                   WithStats:(BOOL)stats;
 
 
 @end
@@ -384,11 +387,19 @@ typedef struct NetworkInfoMes NetworkInfo;
 - (void)setPeerVideoPause:(NSString *)peerId Pause:(BOOL)pause;
 
 /**
- 发送IM消息
+ 发送课堂IM消息
  
  @param mes 消息内容
  */
 - (void)sendChatMessage:(NSString *)mes;
+
+/**
+ 发送1.2.8会议IM消息
+ 
+ @param mesType 消息类型 (正整数) 2用户消息、3系统消息
+ @param mes 消息内容
+ */
+- (void)sendMeetingChatMessage:(NSString *)mes;
 
 /**
  发送举手消息
@@ -408,6 +419,13 @@ typedef struct NetworkInfoMes NetworkInfo;
  @param mes 消息内容
  */
 - (void)sendDrawBoardMessage:(DrawBoard)mes;
+
+/**
+ 发送画板消息
+ Meeting1.2.8
+ @param mes 消息内容
+ */
+- (void)sendMeetingDrawBoardMessage:(DrawBoard)mes;
 
 /**
  清空画板
@@ -454,12 +472,6 @@ typedef struct NetworkInfoMes NetworkInfo;
  @param role 用户角色
  */
 - (void)closeRolesForAudioVideo:(NSString *)role;
-
-/**
- 打开用户角色音视频
- @param role 用户角色
- */
-- (void)openRolesForAudioVideo:(NSString *)role;
 
 /**
  获取用户信息
@@ -510,7 +522,7 @@ typedef struct NetworkInfoMes NetworkInfo;
 /**
  获取当前peerId
  */
-- (NSString*) getPeerId;
+-(NSString*)getPeerId;
 
 @end
 

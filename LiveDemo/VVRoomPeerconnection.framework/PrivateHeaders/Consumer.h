@@ -71,8 +71,14 @@ public:
 	std::string  GetSource() {
 		return _source;
 	}
-private:
-	void DestorySelf();
+
+	void SetLabel(std::string label) {
+		_label = label;
+	}
+
+	std::string GetLabel() {
+		return _label;
+	}
 
 private:
 	int64_t _id = 0;
@@ -96,6 +102,8 @@ private:
 	bool _locallyPaused = false;
 
 	bool _remotelyPaused = false;
+
+	std::string _label;
 
 	webrtc::MediaStreamTrackInterface* _track = NULL;
 

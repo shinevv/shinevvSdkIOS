@@ -20,17 +20,28 @@
     
 //    _cellView.frame = CGRectMake(0, 0, self.bounds.size.width/2-1, (self.bounds.size.height-64)/4-1);
 
-    _VideoView = [[RTCEAGLVideoView alloc] init];
+
+    
+    self.disNameLib = [[UILabel alloc] initWithFrame:CGRectMake(0, self.bounds.size.height-30, self.bounds.size.width, 20)];
+    _disNameLib.font = [UIFont systemFontOfSize:15];
+    _disNameLib.textAlignment = NSTextAlignmentCenter;
+    [self addSubview:_disNameLib];
+}
+- (void)connectWithVideoTarck:(RTCVideoTrack *)videoTrack disName:(NSString*)name{
+    SvideoTrack = videoTrack;
+    [videoTrack addRenderer:_VideoView];
+    _disNameLib.text = name;
+}
+
+- (void)resetVideoView{
+    [self.VideoView removeFromSuperview];
+    self.VideoView = [[RTCEAGLVideoView alloc] init];
     _VideoView.frame = CGRectMake(0, 0,self.bounds.size.width+30, self.bounds.size.height+20);
     _VideoView.backgroundColor = [UIColor clearColor];
     _VideoView.delegate = (id)self;
-    [self addSubview:_VideoView];
-    
-}
-- (void)connectWithVideoTarck:(RTCVideoTrack *)videoTrack{
-    SvideoTrack = videoTrack;
-    [videoTrack addRenderer:_VideoView];
-
+//    [self addSubview:_VideoView];
+    [self insertSubview:_VideoView atIndex:1];
+    _VideoView.hidden = YES;
 }
 
 - (void)dispose{
@@ -38,7 +49,8 @@
         [SvideoTrack removeRenderer:_VideoView];
         SvideoTrack = nil;
     }
-    _VideoView.hidden = YES;
+    [self resetVideoView];
+    _disNameLib.text = @"";
 }
 - (void)videoView:(RTCEAGLVideoView *)videoView didChangeVideoSize:(CGSize)size{
     if (videoView == _VideoView) {

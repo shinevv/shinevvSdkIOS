@@ -120,7 +120,7 @@ public:
 	* 返回视频创建状态
 	* @param bSuccess
 	*/
-	virtual void OnCreateLocalVideo(bool bSuccess) = 0;
+	virtual void OnCreateLocalVideo(bool bSuccess, bool rejectByServer) = 0;
 
 	/**
 	 * 创建本地视频成功
@@ -266,9 +266,13 @@ public:
 	*/
 	void GetUserDataHistory(ProcessCallBack successCallBack, ProcessCallBack failCallBack, void* userdata);
 
+	void CreateMedia();
+
 	void DisableCamera();
 
 	void EnableCamera();
+
+	void TryToEnableCamera(ProcessCallBack successCallBack, ProcessCallBack failCallBack, void* userdata);
 
 	void MuteMic();
 
@@ -316,10 +320,6 @@ private:
 	bool SetMicProducer();
 
 	bool EnableWebcam();
-
-	void closeMicProducer();
-
-	void closeWebcamProducer();
 
 	void ActiveSpeakerCallBack(Json::Value value);
 
@@ -388,6 +388,8 @@ private:
 	std::string _kind;
 
 	std::vector<std::string> _ignoreRolesForAudioVideo;
+
+	std::string _joinedResponseData;
 
 	bool _in_room = true;
 };

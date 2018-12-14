@@ -89,6 +89,12 @@ static SocketClient* _client = nil;
             [ws.dataDelegate onCallEnd:data];
         }
     }];
+    [_socket on:@"getroom" callback:^(NSArray * _Nonnull data, SocketAckEmitter * _Nonnull ack) {
+        NSLog(@"getoom");
+        if ([ws.dataDelegate respondsToSelector:@selector(onRoom:)]) {
+            [ws.dataDelegate onRoom:data[0]];
+        }
+    }];
 }
 
 - (void)loginWithName:(NSString*)name;
@@ -98,8 +104,8 @@ static SocketClient* _client = nil;
     
 }
 
-- (void)callFormName:(NSString*)nama toName:(NSString*)toName type:(int)type room:(long)roomid {
-    [_socket emit:@"call" with:@[toName,@(type),@(roomid)]];
+- (void)callFormName:(NSString*)nama toName:(NSString*)toName type:(int)type room:(long)roomid token:(NSString*)token{
+    [_socket emit:@"call" with:@[toName,@(type),@(roomid), token]];
 }
 
 
@@ -109,6 +115,10 @@ static SocketClient* _client = nil;
 
 - (void)callEndWithRoom:(long)roomId{
     [_socket emit:@"call end" with:@[@(roomId)]];
+}
+
+- (void)getRoom{
+    [_socket emit:@"getroom" with:@[]];
 }
 
 -(void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential *credential))completionHandler

@@ -86,7 +86,7 @@ public:
 
 	webrtc::MediaStreamTrackInterface* GetTrack(std::string direction, std::string kind);
 
-	bool Join(std::string displayName, std::string peerName, std::string role, std::string device, std::string extraInfoFromServer);
+	bool Join(std::string displayName, std::string peerName, std::string role, std::string mode, std::string device, std::string extraInfoFromServer);
 
 	void SetExtendedRtpCapabilities(Json::Value extendedRtpCapabilities);
 
@@ -100,7 +100,7 @@ public:
 
 	Peer* GetPeer(std::string peerName);
 
-	void RemovePeer(std::string peerName);
+	bool RemovePeer(std::string peerName);
 
 	bool ConsumerPaused(int64_t id, std::string peerName);
 
@@ -111,10 +111,14 @@ public:
 	void SetPeerPause(std::string peerName, std::string source, bool pause);
 
 	void LeaveMe();
+
+	bool JoinProcess(Json::Value peers, Json::Value extraInfo);
+
+	void TransportClosed(int64_t id);
 private:
 	bool QueryRoom();
 
-	bool JoinRoom(Json::Value& peers);
+	bool JoinRoom(std::string mode);
 
 	bool HandlePeers(Json::Value peers);
 

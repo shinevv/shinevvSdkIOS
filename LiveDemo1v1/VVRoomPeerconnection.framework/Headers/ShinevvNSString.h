@@ -26,7 +26,24 @@
               WithPenSize:(NSNumber *)pensize
               WithPenType:(NSNumber *)pen
              WithbordType:(NSString *)bordType
-            WithSentBordSize:(CGRect)bordSize;
+         WithSentBordSize:(CGRect)bordSize;
+
+- (NSString *)sendMeetingMessageHDbard:(NSMutableArray *)proint
+                     WihtcColor:(NSString *)color
+                    WithPenSize:(NSNumber*)pensize
+                    WihtPentype:(NSNumber *)pen
+                   WithbordType:(NSString *)bordType
+                      WithSentBordSize:(CGRect)bordSize;
+
+- (NSString *)setMeetingPenArray:(NSMutableArray *)array
+                WithColor:(NSString *)color
+              WithPenSize:(NSNumber *)pensize
+              WithPenType:(NSNumber *)pen
+             WithbordType:(NSString *)bordType
+         WithSentBordSize:(CGRect)bordSize;
+
+
+- (NSString *)getSysTimes;
 
 -(NSString *)convertToJsonData:(NSDictionary *)dict;
 
